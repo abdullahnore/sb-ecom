@@ -2,6 +2,7 @@ package com.ecommerce.sb_ecom.controller;
 
 import com.ecommerce.sb_ecom.model.Category;
 import com.ecommerce.sb_ecom.service.CategoryService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,16 +33,14 @@ public class CategoryController {
 @RequestMapping(value ="/public/categories" ,method = RequestMethod.    POST)
 
 
-public ResponseEntity<String> createCategory(@RequestBody Category category){
+public ResponseEntity<String> createCategory( @Valid @RequestBody Category category){
  categoryService.createCategory(category);
         return new ResponseEntity<>( "Category Added succesfully",HttpStatus.CREATED);
     }
     @DeleteMapping ("/admin/categories/{categoryId}")
     public ResponseEntity<String> deleteCategory( @PathVariable long categoryId){
-        try{   String status= categoryService.deleteCategory(categoryId);
-            return  new ResponseEntity<>(status, HttpStatus.OK);}catch(ResponseStatusException e){
-           return new ResponseEntity<>( e.getReason(),e.getStatusCode());
-        }
+        String status= categoryService.deleteCategory(categoryId);
+            return  new ResponseEntity<>(status, HttpStatus.OK);
 
 
     }
@@ -49,11 +48,9 @@ public ResponseEntity<String> createCategory(@RequestBody Category category){
     @PutMapping("/public/categories/{categoryId}")
     public ResponseEntity<String> updateCategory(@RequestBody Category category,
                                                  @PathVariable long categoryId){
-        try{
+
            Category savedCategory= categoryService.updateCategory(category,categoryId);
             return  new ResponseEntity<>("category updated with id : " +  categoryId, HttpStatus.OK);
-        }catch(ResponseStatusException e){
-            return new ResponseEntity<>( e.getReason(),e.getStatusCode());
-        }
+       
     }
 }
