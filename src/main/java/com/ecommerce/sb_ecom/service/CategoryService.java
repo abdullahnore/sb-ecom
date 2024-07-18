@@ -1,15 +1,14 @@
 package com.ecommerce.sb_ecom.service;
 
-import com.ecommerce.sb_ecom.model.Category;
-
-import java.util.List;
+import com.ecommerce.sb_ecom.payload.CategoryDTO;
+import com.ecommerce.sb_ecom.payload.CategoryResponse;
 
 //this is an interface for loose coupling
 public interface CategoryService {
-    List<Category> getAllCategories();
-    void createCategory(Category category);
+    CategoryResponse getAllCategories(Integer pageNumber , Integer pageSize, String sortBy, String sortOrder);
+    CategoryDTO createCategory(CategoryDTO categoryDTO);
 
-    String deleteCategory(long categoryId);
+    CategoryDTO deleteCategory(long categoryId);
 
-    Category updateCategory(Category category,long categoryId);
+    CategoryDTO updateCategory(CategoryDTO categoryDTO,long categoryId);
 }
